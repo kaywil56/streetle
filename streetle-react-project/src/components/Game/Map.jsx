@@ -8,7 +8,6 @@ const loader = new Loader({
 
 const Map = ({ currentCountry }) => {
   const ADJUSTMENT_AMOUNT = 0.09
-
   let mapElement = useRef(null);
   let googleStreetViewService;
   let panorama;
@@ -16,6 +15,11 @@ const Map = ({ currentCountry }) => {
   let nearestLatLng;
   // Value for random adjustment of given coords 
   let adjust;
+  let panoOptions = {
+    scrollwheel: true,
+    disableDefaultUI: true,
+    clickToGo: false
+  };
 
   // Fetch a new panorama
   const getNearestPanorama = () => {
@@ -45,20 +49,23 @@ const Map = ({ currentCountry }) => {
         )
         .then(() => {
           panorama.setPano(nearestLatLng);
-          panorama.setPov({
+          panorama.setPov({           
             heading: 165,
             pitch: 0,
           });
           panorama.setVisible(true);
+          panorama.setOptions(panoOptions);
         });
     });
   };
-
   // If the currentCountry prop changes; fetch a new country
   useEffect(() => {
     getNearestPanorama();
   }, [currentCountry]);
 
-  return <div id="map" ref={mapElement} />;
+  return <div 
+    id="map" 
+    ref={mapElement}
+  />;
 };
 export default Map;

@@ -27,7 +27,7 @@ const Game = () => {
 
   return (
     <>
-      <form onSubmit={checkGuess}>
+      <form class="guessArea" onSubmit={checkGuess}>
           <Map currentCountry={currentCountry} />
         <input
           value={guess}
