@@ -2,3 +2,9 @@
     height: 90vh;
     width: 100vw;
 }
+input {
+    text-align: center;
+}
+.guessArea {
+    text-align: center;
+}
