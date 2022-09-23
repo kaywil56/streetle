@@ -1,5 +1,6 @@
 import { Loader } from "@googlemaps/js-api-loader";
 import React, { useRef, useEffect } from "react";
+import './Map.css'
 
 const loader = new Loader({
   apiKey: import.meta.env.VITE_STREET_VIEW_API_KEY,
