@@ -17,7 +17,8 @@ const Game = () => {
   const checkGuess = (e) => {
     e.preventDefault();
     setGuessCount(guessCount + 1);
-    if (guess == currentCountry.country) {
+    // Convert to lower case to stop case sensitive input and check the guess
+    if (guess.toLowerCase() == currentCountry.country.toLowerCase()) {
       // Reset guess
       setGuess("");
       // // Generate random integer
