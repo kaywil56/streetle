@@ -1,0 +1,67 @@
+[
+    {
+      "city": "Tokyo",
+      "city_ascii": "Tokyo",
+      "lat": 35.6839,
+      "lng": 139.7744,
+      "country": "Japan",
+      "capital": "primary"
+    },
+    {
+      "city": "Jakarta",
+      "city_ascii": "Jakarta",
+      "lat": -6.2146,
+      "lng": 106.8451,
+      "country": "Indonesia",
+      "capital": "primary"
+    },
+    {
+      "city": "Delhi",
+      "city_ascii": "Delhi",
+      "lat": 28.6667,
+      "lng": 77.2167,
+      "country": "India",
+      "capital": "admin"
+    },
+    {
+      "city": "Mexico City",
+      "city_ascii": "Mexico City",
+      "lat": 19.4333,
+      "lng": -99.1333,
+      "country": "Mexico",
+      "capital": "primary"
+    },
+    {
+      "city": "New York",
+      "city_ascii": "New York",
+      "lat": 40.6943,
+      "lng": -73.9249,
+      "country": "United States",
+      "capital": ""
+    },
+    {
+      "city": "Buenos Aires",
+      "city_ascii": "Buenos Aires",
+      "lat": -34.5997,
+      "lng": -58.3819,
+      "country": "Argentina",
+      "capital": "primary"
+    },
+    {
+      "city": "Istanbul",
+      "city_ascii": "Istanbul",
+      "lat": 41.01,
+      "lng": 28.9603,
+      "country": "Turkey",
+      "capital": "admin"
+    },
+    {
+      "city": "Los Angeles",
+      "city_ascii": "Los Angeles",
+      "lat": 34.1139,
+      "lng": -118.4068,
+      "country": "United States",
+      "capital": ""
+    }
+  ]
+  

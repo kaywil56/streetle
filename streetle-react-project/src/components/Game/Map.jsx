@@ -7,8 +7,8 @@ const loader = new Loader({
   version: "weekly",
 });
 
-const Map = ({ currentCountry }) => {
-  const ADJUSTMENT_AMOUNT = 0.09
+const Map = ({ currentLocation }) => {
+  const ADJUSTMENT_AMOUNT = 0.04
   let mapElement = useRef(null);
   let googleStreetViewService;
   let panorama;
@@ -34,8 +34,8 @@ const Map = ({ currentCountry }) => {
         .getPanorama(
           {
             location: new google.maps.LatLng({
-              lat: currentCountry?.lat + adjust,
-              lng: currentCountry?.lng + adjust,
+              lat: currentLocation?.latitude + adjust,
+              lng: currentLocation?.longitude + adjust,
             }),
             source: google.maps.StreetViewSource.OUTDOOR,
             radius: 1500,
@@ -59,10 +59,10 @@ const Map = ({ currentCountry }) => {
         });
     });
   };
-  // If the currentCountry prop changes; fetch a new country
+  // If the currentLocation prop changes; fetch a new country
   useEffect(() => {
     getNearestPanorama();
-  }, [currentCountry]);
+  }, [currentLocation]);
 
   return <div 
     id="map" 
