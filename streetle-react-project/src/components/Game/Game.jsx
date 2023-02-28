@@ -5,12 +5,13 @@ import Summary from "../Modals/Summary";
 import "./Game.css";
 
 const Game = () => {
-  const MAX_GUESSES = 3;
+  const MAX_GUESSES = 5;
 
   const [isGameOver, setIsGameOver] = useState(false)
   const [guessCount, setGuessCount] = useState(0);
   const [guess, setGuess] = useState("");
-  const [currentCountry, setCurrentCountry] = useState(null);
+  const [currentCountry, setCurrentCountry] = useState({});
+  const [currentLocation, setCurrentLocation] = useState({})
   const [didWin, setDidWin] = useState(false);
 
   // Checks if user input matches the current country
@@ -18,12 +19,9 @@ const Game = () => {
     e.preventDefault();
     setGuessCount(guessCount + 1);
     // Convert to lower case to stop case sensitive input and check the guess
-    if (guess.toLowerCase() == currentCountry.country.toLowerCase()) {
+    if (guess.toLowerCase() == currentCountry.name.toLowerCase()) {
       // Reset guess
       setGuess("");
-      // // Generate random integer
-      // let randomCountryIdx = Math.floor(Math.random() * countries.length);
-      // setCurrentCountry(countries[randomCountryIdx]);
       setDidWin(true)
       setIsGameOver(true)
       console.log("Win");
@@ -37,8 +35,21 @@ const Game = () => {
   useEffect(() => {
     let randomCountryIdx = Math.floor(Math.random() * countries.length);
     setCurrentCountry(countries[randomCountryIdx]);
-    console.log(currentCountry);
+    console.log(currentCountry)
+    // let randomLocationId = Math.floor(Math.random() * currentCountry?.largest_cities.length);
+    // setCurrentLocation(currentCountry.largest_cities[randomLocationId])
   }, []);
+
+  // Randomize the location within the selected country
+  useEffect(() => {
+    if (currentCountry.largest_cities) {
+      let randomLocationIdx = Math.floor(Math.random() * currentCountry.largest_cities.length);
+      setCurrentLocation(currentCountry.largest_cities[randomLocationIdx]);
+    }
+    console.log(currentCountry.name)
+    console.log("current location: " + JSON.stringify(currentLocation))
+
+  }, [currentCountry]);
 
   return (
     <>
@@ -47,7 +58,7 @@ const Game = () => {
           <div id="score-container">
             {guessCount}/{MAX_GUESSES}
           </div>
-          <Map currentCountry={currentCountry} />
+          <Map currentLocation={currentLocation} />
           <form className="guessArea" onSubmit={checkGuess}>
             <input
               value={guess}
@@ -58,7 +69,7 @@ const Game = () => {
           </form>
         </>
       ) : (
-        <Summary didWin={didWin} score={guessCount} country={currentCountry.country} />
+        <Summary didWin={didWin} score={guessCount} country={currentCountry.name} />
       )}{" "}
     </>
   );
