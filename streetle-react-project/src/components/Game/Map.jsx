@@ -8,7 +8,7 @@ const loader = new Loader({
 });
 
 const Map = ({ currentLocation }) => {
-  const ADJUSTMENT_AMOUNT = 0.09
+  const ADJUSTMENT_AMOUNT = 0.04
   let mapElement = useRef(null);
   let googleStreetViewService;
   let panorama;
