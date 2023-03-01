@@ -19,6 +19,8 @@ const Game = () => {
     e.preventDefault();
     setGuessCount(guessCount + 1);
     let distanceBetween = checkDistanceBetween();
+    let bearing = calcBearing();
+    console.log("angle of direction from guess to correct country in degrees:", bearing);
     console.log(`${guess} to ${currentCountry.name} is ${distanceBetween}KM`);
     // Convert to lower case to stop case sensitive input and check the guess
     if (guess.toLowerCase() == currentCountry.name.toLowerCase()) {
@@ -66,6 +68,29 @@ const Game = () => {
       return Math.round(distance * 1.609344, 2);
     }
   };
+
+  const calcBearing = () => {
+    let guessCountryCenter = getGuessCountryCenter();
+    let lat1 = guessCountryCenter.latitude;
+    let lon1 = guessCountryCenter.longitude;
+    let lat2 = currentCountry.country_center.latitude;
+    let lon2 = currentCountry.country_center.longitude;
+
+    const toRadians = (degree) => {
+      return degree * (Math.PI / 180);
+    }
+    const x = Math.cos(toRadians(lat2)) * Math.sin(toRadians(lon2 - lon1));
+    const y =
+      Math.cos(toRadians(lat1)) * Math.sin(toRadians(lat2)) -
+      Math.sin(toRadians(lat1)) * Math.cos(toRadians(lat2)) * Math.cos(toRadians(lon2 - lon1));
+  
+    let beta = Math.atan2(x, y);
+    beta = (beta * 180) / Math.PI;
+
+    return (
+      beta.toFixed(2)
+    )
+  }
 
   // Choose random country on mount
   useEffect(() => {
