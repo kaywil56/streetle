@@ -13,6 +13,7 @@ const Game = () => {
   const [currentCountry, setCurrentCountry] = useState({});
   const [currentLocation, setCurrentLocation] = useState({});
   const [didWin, setDidWin] = useState(false);
+  const [suggest, setSuggest] = useState([]);
 
   // Checks if user input matches the current country
   const checkGuess = (e) => {
@@ -20,7 +21,10 @@ const Game = () => {
     setGuessCount(guessCount + 1);
     let distanceBetween = checkDistanceBetween();
     let bearing = calcBearing();
-    console.log("angle of direction from guess to correct country in degrees:", bearing);
+    console.log(
+      "angle of direction from guess to correct country in degrees:",
+      bearing
+    );
     console.log(`${guess} to ${currentCountry.name} is ${distanceBetween}KM`);
     // Convert to lower case to stop case sensitive input and check the guess
     if (guess.toLowerCase() == currentCountry.name.toLowerCase()) {
@@ -78,19 +82,35 @@ const Game = () => {
 
     const toRadians = (degree) => {
       return degree * (Math.PI / 180);
-    }
+    };
     const x = Math.cos(toRadians(lat2)) * Math.sin(toRadians(lon2 - lon1));
     const y =
       Math.cos(toRadians(lat1)) * Math.sin(toRadians(lat2)) -
-      Math.sin(toRadians(lat1)) * Math.cos(toRadians(lat2)) * Math.cos(toRadians(lon2 - lon1));
-  
+      Math.sin(toRadians(lat1)) *
+        Math.cos(toRadians(lat2)) *
+        Math.cos(toRadians(lon2 - lon1));
+
     let beta = Math.atan2(x, y);
     beta = (beta * 180) / Math.PI;
 
-    return (
-      beta.toFixed(2)
-    )
-  }
+    return beta.toFixed(2);
+  };
+
+  // Fill auto suggest list based on guess
+  const autocompleteMatch = () => {
+    let reg = new RegExp(guess);
+    let filteredCountryList = countries.filter((country) => {
+      if (country.name.match(reg)) {
+        return country;
+      }
+    });
+    setSuggest(filteredCountryList);
+  };
+
+  // When guess is being typed, refill auto suggest list
+  useEffect(() => {
+    autocompleteMatch();
+  }, [guess]);
 
   // Choose random country on mount
   useEffect(() => {
@@ -126,7 +146,15 @@ const Game = () => {
               value={guess}
               onChange={(e) => setGuess(e.target.value)}
               placeholder="Enter a country"
+              list="autocomplete"
             ></input>
+            {guess.length > 0 && (
+              <datalist id="autocomplete">
+                {suggest.map((country, idx) => {
+                   return<option id={idx} value={country.name}/>;
+                })}
+              </datalist>
+            )}
             <button type="submit">Guess</button>
           </form>
         </>
