@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import countries from "../../assets/countries.json";
 import Map from "./Map";
 import Summary from "../Modals/Summary";
+import Legend from "./Legend";
 import "./Game.css";
 
 const Game = () => {
@@ -14,13 +15,21 @@ const Game = () => {
   const [currentLocation, setCurrentLocation] = useState({});
   const [didWin, setDidWin] = useState(false);
   const [suggest, setSuggest] = useState([]);
+  // Init array with question marks for legend
+  const [totalGuesses, setTotalGuesses] = useState(
+    [...Array(MAX_GUESSES)].map(() => "?")
+  );
 
   // Checks if user input matches the current country
   const checkGuess = (e) => {
     e.preventDefault();
-    setGuessCount(guessCount + 1);
     let distanceBetween = checkDistanceBetween();
     let bearing = calcBearing();
+    let updatedList = totalGuesses;
+    // Update legend list with the most recent guess and the KM away from correct guess
+    updatedList[guessCount] = `${guess} ${distanceBetween}KM`;
+    setTotalGuesses(updatedList);
+    setGuessCount(guessCount + 1);
     console.log(
       "angle of direction from guess to correct country in degrees:",
       bearing
@@ -137,9 +146,11 @@ const Game = () => {
     <>
       {!isGameOver ? (
         <>
-          <div id="score-container">
-            {guessCount}/{MAX_GUESSES}
-          </div>
+          <Legend
+            MAX_GUESSES={MAX_GUESSES}
+            guessCount={guessCount}
+            totalGuesses={totalGuesses}
+          />
           <Map currentLocation={currentLocation} />
           <form className="guessArea" onSubmit={checkGuess}>
             <input
@@ -151,7 +162,7 @@ const Game = () => {
             {guess.length > 0 && (
               <datalist id="autocomplete">
                 {suggest.map((country, idx) => {
-                   return<option id={idx} value={country.name}/>;
+                  return <option id={idx} value={country.name} />;
                 })}
               </datalist>
             )}
