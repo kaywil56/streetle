@@ -1,0 +1,9 @@
+#score-container {
+    z-index: 5;
+    position: absolute;
+    left: 1%;
+    top: 3%;
+    color: white;
+    background-color: rgba(51, 51, 51, .65);
+    padding: 10px;
+  }
