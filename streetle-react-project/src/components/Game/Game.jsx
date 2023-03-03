@@ -51,9 +51,10 @@ const Game = () => {
     let distanceBetween = checkDistanceBetween();
     let bearing = calcBearing();
     let bearingText = getRegionFromBearing();
+    let isBordering = isBorderingCountry()
     let updatedList = totalGuesses;
     // Update legend list with the most recent guess, KM away from correct guess and direction
-    updatedList[guessCount] = `${guess} ${distanceBetween}KM | ${bearingText}`;
+    updatedList[guessCount] = `${guess} ${distanceBetween}KM | ${bearingText} | ${isBordering}`;
     setTotalGuesses(updatedList);
     setGuessCount(guessCount + 1);
     console.log(
@@ -75,17 +76,17 @@ const Game = () => {
   };
 
   // Gets the lat and long for the center of the guessed country
-  const getGuessCountryCenter = () => {
+  const getGuessCountry = () => {
     // Search countries list and find guess country object
     const guessCountryCenter = countries.find(
       ({ name }) => name.toLowerCase() === guess.toLowerCase()
     );
-    return guessCountryCenter.country_center;
+    return guessCountryCenter;
   };
 
   // Checks the distance between the guess and current country coords
   const checkDistanceBetween = (unit = "kilometers") => {
-    let guessCountryCenter = getGuessCountryCenter();
+    let guessCountryCenter = getGuessCountry().country_center;
     console.log(guessCountryCenter);
     console.log(currentCountry.country_center);
     let theta =
@@ -109,7 +110,7 @@ const Game = () => {
   };
 
   const calcBearing = () => {
-    let guessCountryCenter = getGuessCountryCenter();
+    let guessCountryCenter = getGuessCountry().country_center;
     let lat1 = guessCountryCenter.latitude;
     let lon1 = guessCountryCenter.longitude;
     let lat2 = currentCountry.country_center.latitude;
@@ -141,6 +142,19 @@ const Game = () => {
     });
     setSuggest(filteredCountryList);
   };
+
+  const isBorderingCountry = () => {
+    let guessCountry = getGuessCountry()
+    let isBorder = false
+    console.log("potato: " + guessCountry.name)
+    guessCountry.bordering_countries.forEach((borderCountry) => {
+      console.log(borderCountry)
+      if(borderCountry.toLowerCase() === currentCountry.name.toLowerCase()){
+        isBorder = true
+      }
+    })
+    return isBorder
+  }
 
   // When guess is being typed, refill auto suggest list
   useEffect(() => {
