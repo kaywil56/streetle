@@ -53,9 +53,10 @@ const Game = () => {
     let bearingText = getRegionFromBearing();
     let isBordering = isBorderingCountry()
     let sameContinent = isInSameContinent()
+    let sameHemisphere =  isInSameHemisphere()
     let updatedList = totalGuesses;
     // Update legend list with the most recent guess, KM away from correct guess and direction
-    updatedList[guessCount] = `${guess} ${distanceBetween}KM | ${bearingText} | ${isBordering} | ${sameContinent}`;
+    updatedList[guessCount] = `${guess} ${distanceBetween}KM | ${bearingText} | ${isBordering} | ${sameContinent} | ${sameHemisphere}`;
     setTotalGuesses(updatedList);
     setGuessCount(guessCount + 1);
     console.log(
@@ -159,6 +160,11 @@ const Game = () => {
   const isInSameContinent = () => {
     let guessCountry = getGuessCountry()
     return guessCountry.continent === currentCountry.continent
+  }
+  
+  const isInSameHemisphere = () => {
+    let guessCountry = getGuessCountry()
+    return guessCountry.hemisphere === currentCountry.hemisphere
   }
 
   // When guess is being typed, refill auto suggest list
