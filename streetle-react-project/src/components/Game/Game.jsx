@@ -20,19 +20,45 @@ const Game = () => {
     [...Array(MAX_GUESSES)].map(() => "?")
   );
 
+  // Text directional dataset excludes South (-155.201, 155.201)
+  // If bearing direction not between these ranges it must be south
+  const textDirectionSet = [
+    { direction: 'N', min: -20.065, max: 20.065 },
+    { direction: 'NE', min: 20.066, max: 65.110 },
+    { direction: 'NW', min: -65.110, max: -20.066 },
+    { direction: 'E', min: 65.111, max: 110.155 },
+    { direction: 'W', min: -110.155, max: -65.111 },
+    { direction: 'SW', min: -155.200, max: -110.156 },
+    { direction: 'SE', min: 110.156, max: 155.200 }
+  ];
+  
+  // Checking direction bearing from guess to correct country against ranges in dataset
+  const getRegionFromBearing = () => {
+    let bearingNum = calcBearing();
+    let south = "S"
+    for (let i = 0; i < textDirectionSet.length; i++) {
+      const { direction, min, max } = textDirectionSet[i];
+      if (bearingNum >= min && bearingNum <= max) {
+        return direction;
+      }
+    }
+    return south;
+  }
+
   // Checks if user input matches the current country
   const checkGuess = (e) => {
     e.preventDefault();
     let distanceBetween = checkDistanceBetween();
     let bearing = calcBearing();
+    let bearingText = getRegionFromBearing();
     let updatedList = totalGuesses;
-    // Update legend list with the most recent guess and the KM away from correct guess
-    updatedList[guessCount] = `${guess} ${distanceBetween}KM`;
+    // Update legend list with the most recent guess, KM away from correct guess and direction
+    updatedList[guessCount] = `${guess} ${distanceBetween}KM | ${bearingText}`;
     setTotalGuesses(updatedList);
     setGuessCount(guessCount + 1);
     console.log(
       "angle of direction from guess to correct country in degrees:",
-      bearing
+      bearing, bearingText
     );
     console.log(`${guess} to ${currentCountry.name} is ${distanceBetween}KM`);
     // Convert to lower case to stop case sensitive input and check the guess
@@ -102,7 +128,7 @@ const Game = () => {
     let beta = Math.atan2(x, y);
     beta = (beta * 180) / Math.PI;
 
-    return beta.toFixed(2);
+    return beta.toFixed(3);
   };
 
   // Fill auto suggest list based on guess
