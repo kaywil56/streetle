@@ -16,26 +16,24 @@ const Game = () => {
   const [didWin, setDidWin] = useState(false);
   const [suggest, setSuggest] = useState([]);
   // Init array with question marks for legend
-  const [totalGuesses, setTotalGuesses] = useState(
-    [...Array(MAX_GUESSES)].map(() => "?")
-  );
+  const [totalGuesses, setTotalGuesses] = useState([...Array(MAX_GUESSES)]);
 
   // Text directional dataset excludes South (-155.201, 155.201)
   // If bearing direction not between these ranges it must be south
   const textDirectionSet = [
-    { direction: 'N', min: -20.065, max: 20.065 },
-    { direction: 'NE', min: 20.066, max: 65.110 },
-    { direction: 'NW', min: -65.110, max: -20.066 },
-    { direction: 'E', min: 65.111, max: 110.155 },
-    { direction: 'W', min: -110.155, max: -65.111 },
-    { direction: 'SW', min: -155.200, max: -110.156 },
-    { direction: 'SE', min: 110.156, max: 155.200 }
+    { direction: "N", min: -20.065, max: 20.065 },
+    { direction: "NE", min: 20.066, max: 65.11 },
+    { direction: "NW", min: -65.11, max: -20.066 },
+    { direction: "E", min: 65.111, max: 110.155 },
+    { direction: "W", min: -110.155, max: -65.111 },
+    { direction: "SW", min: -155.2, max: -110.156 },
+    { direction: "SE", min: 110.156, max: 155.2 },
   ];
-  
+
   // Checking direction bearing from guess to correct country against ranges in dataset
   const getRegionFromBearing = () => {
     let bearingNum = calcBearing();
-    let south = "S"
+    let south = "S";
     for (let i = 0; i < textDirectionSet.length; i++) {
       const { direction, min, max } = textDirectionSet[i];
       if (bearingNum >= min && bearingNum <= max) {
@@ -43,7 +41,7 @@ const Game = () => {
       }
     }
     return south;
-  }
+  };
 
   // Checks if user input matches the current country
   const checkGuess = (e) => {
@@ -51,17 +49,27 @@ const Game = () => {
     let distanceBetween = checkDistanceBetween();
     let bearing = calcBearing();
     let bearingText = getRegionFromBearing();
-    let isBordering = isBorderingCountry()
-    let sameContinent = isInSameContinent()
-    let sameHemisphere =  isInSameHemisphere()
+    let isBordering = isBorderingCountry();
+    let sameContinent = isInSameContinent();
+    let sameHemisphere = isInSameHemisphere();
     let updatedList = totalGuesses;
+
+    const guessHintInfo = {
+      distance: distanceBetween,
+      bearing: bearingText,
+      border: isBordering,
+      continent: sameContinent,
+      hemisphere: sameHemisphere,
+      guess: guess,
+    };
     // Update legend list with the most recent guess, KM away from correct guess and direction
-    updatedList[guessCount] = `${guess} ${distanceBetween}KM | ${bearingText} | ${isBordering} | ${sameContinent} | ${sameHemisphere}`;
+    updatedList[guessCount] = guessHintInfo;
     setTotalGuesses(updatedList);
     setGuessCount(guessCount + 1);
     console.log(
       "angle of direction from guess to correct country in degrees:",
-      bearing, bearingText
+      bearing,
+      bearingText
     );
     console.log(`${guess} to ${currentCountry.name} is ${distanceBetween}KM`);
     // Convert to lower case to stop case sensitive input and check the guess
@@ -146,26 +154,26 @@ const Game = () => {
   };
 
   const isBorderingCountry = () => {
-    let guessCountry = getGuessCountry()
-    let isBorder = false
+    let guessCountry = getGuessCountry();
+    let isBorder = false;
     guessCountry.bordering_countries.forEach((borderCountry) => {
-      console.log(borderCountry)
-      if(borderCountry.toLowerCase() === currentCountry.name.toLowerCase()){
-        isBorder = true
+      console.log(borderCountry);
+      if (borderCountry.toLowerCase() === currentCountry.name.toLowerCase()) {
+        isBorder = true;
       }
-    })
-    return isBorder
-  }
+    });
+    return isBorder;
+  };
 
   const isInSameContinent = () => {
-    let guessCountry = getGuessCountry()
-    return guessCountry.continent === currentCountry.continent
-  }
-  
+    let guessCountry = getGuessCountry();
+    return guessCountry.continent === currentCountry.continent;
+  };
+
   const isInSameHemisphere = () => {
-    let guessCountry = getGuessCountry()
-    return guessCountry.hemisphere === currentCountry.hemisphere
-  }
+    let guessCountry = getGuessCountry();
+    return guessCountry.hemisphere === currentCountry.hemisphere;
+  };
 
   // When guess is being typed, refill auto suggest list
   useEffect(() => {
