@@ -5,10 +5,8 @@ import { RiCloseLine } from "react-icons/ri";
 const Modal = ({ setIsOpen }) => {
   return (
     <>
-    <div>
       <div onClick={() => setIsOpen(false)} />
-      <div className="centered">
-        <div className="modal">
+         <div className="modal">
           <div className="modalHeader">
             <h5 className="heading">HOW TO PLAY</h5>
           </div>
@@ -28,9 +26,7 @@ const Modal = ({ setIsOpen }) => {
               </button>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
+        </div> 
   </>
   );
 };

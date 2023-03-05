@@ -237,8 +237,8 @@ const Game = () => {
           <button className="primaryBtn" type="submit" onClick={() => setIsOpen(true)}>
               ???
           </button>
-            {isOpen && <Modal setIsOpen={setIsOpen} />}
           </form>
+          {isOpen && <Modal setIsOpen={setIsOpen} />}
         </>
       ) : (
         <Summary
