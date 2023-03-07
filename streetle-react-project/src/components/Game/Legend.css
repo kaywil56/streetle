@@ -3,10 +3,11 @@
   position: absolute;
   left: 1%;
   top: 3%;
-  background-color: rgba(51, 51, 51, 0.4);
+  /* background-color: rgba(51, 51, 51, 0.4); */
+  background-color: #fff;
   padding: 10px;
   border-radius: 5px;
-  color: white;
+  /* color: white; */
 }
 
 .guess-amount {
@@ -16,4 +17,27 @@
   padding: 2px 0 2px 0;
   border-radius: 2px;
   color: white;
+}
+
+.icon{
+  height: 15px;
+  width: 15px;
+  display: grid;
+  place-items: center;
+  padding: 3px;
+  border-radius: 5px;
+  border: 1px solid #333;
+}
+
+.icon-not-correct{
+  background-color: #fff;
+}
+
+.icon-correct{
+  background-color: #89fc00;
+}
+
+.icon > img{
+  max-width: 100%;
+  max-height: auto;
 }
