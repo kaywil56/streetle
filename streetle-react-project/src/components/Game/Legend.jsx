@@ -19,20 +19,48 @@ const Legend = ({ guessCount, MAX_GUESSES, totalGuesses }) => {
                 <td key={"legend-td" + idx + 1}>{guess.bearing}</td>
                 <td key={"legend-td" + idx + 2}>{guess.distance}KM</td>
                 <td key={"legend-td" + idx + 3}>
-                  {guess.continent ? "| Contitnent |" : ""}
+                  <div
+                    class={
+                      guess.continent
+                        ? "icon icon-correct"
+                        : "icon icon-not-correct"
+                    }
+                  >
+                    <img src="/icons/africa.png" alt="continent" />
+                  </div>
                 </td>
                 <td key={"legend-td" + idx + 4}>
-                  {guess.border ? "Bordering |" : ""}
+                <div
+                    class={
+                      guess.border
+                        ? "icon icon-correct"
+                        : "icon icon-not-correct"
+                    }
+                  >
+                    <img src="/icons/border.png" alt="continent" />
+                  </div>
                 </td>
                 <td key={"legend-td" + idx + 5}>
-                  {guess.hemisphere ? "Hemisphere" : ""}
+                  <div
+                    class={
+                      guess.hemisphere
+                        ? "icon icon-correct"
+                        : "icon icon-not-correct"
+                    }
+                  >
+                    <img src="/icons/hem.png" alt="hemisphere" />
+                  </div>
                 </td>
               </tr>
             );
           } else {
             return (
               <tr key={"unknown-tr" + idx}>
-                <td key={"unknown-td" + idx} className="guess-amount" colSpan="6">
+                <td
+                  key={"unknown-td" + idx}
+                  className="guess-amount"
+                  colSpan="6"
+                >
                   ?
                 </td>
               </tr>
