@@ -4,6 +4,7 @@ import Map from "./Map";
 import Summary from "../Modals/Summary";
 import Legend from "./Legend";
 import "./Game.css";
+import Modal from "../Modals/HowToPlayModal";
 
 const Game = () => {
   const MAX_GUESSES = 5;
@@ -15,6 +16,7 @@ const Game = () => {
   const [currentLocation, setCurrentLocation] = useState({});
   const [didWin, setDidWin] = useState(false);
   const [suggest, setSuggest] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
   // Init array with question marks for legend
   const [totalGuesses, setTotalGuesses] = useState([...Array(MAX_GUESSES)]);
 
@@ -201,6 +203,10 @@ const Game = () => {
     console.log("current location: " + JSON.stringify(currentLocation));
   }, [currentCountry]);
 
+  const handleHowToPlayModal = (e) => {
+    e.preventDefault();
+  }
+
   return (
     <>
       {!isGameOver ? (
@@ -227,6 +233,12 @@ const Game = () => {
             )}
             <button type="submit">Guess</button>
           </form>
+          <form onSubmit={handleHowToPlayModal} className="modalArea">
+          <button className="primaryBtn" type="submit" onClick={() => setIsOpen(true)}>
+              ???
+          </button>
+          </form>
+          {isOpen && <Modal setIsOpen={setIsOpen} />}
         </>
       ) : (
         <Summary
