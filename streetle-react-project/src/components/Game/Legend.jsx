@@ -1,6 +1,17 @@
 import "./Legend.css";
 
 const Legend = ({ guessCount, MAX_GUESSES, totalGuesses }) => {
+  const compassDirections = {
+    N: "0",
+    NE: "45",
+    E: "90",
+    SE: "135",
+    S: "180",
+    SW: "225",
+    W: "270",
+    NW: "315",
+  };
+
   return (
     <table id="score-container">
       <thead>
@@ -16,11 +27,23 @@ const Legend = ({ guessCount, MAX_GUESSES, totalGuesses }) => {
             return (
               <tr key={"legend-tr" + idx}>
                 <td key={"legend-td" + idx}>{guess.guess}</td>
-                <td key={"legend-td" + idx + 1}>{guess.bearing}</td>
+                <td key={"legend-td" + idx + 1}>
+                  <div className="compass">
+                    <img
+                      style={{
+                        transform: `rotate(${
+                          compassDirections[guess.bearing]
+                        }deg)`
+                      }}
+                      src="/icons/compass.png"
+                      alt="compass"
+                    />
+                  </div>
+                </td>
                 <td key={"legend-td" + idx + 2}>{guess.distance}KM</td>
                 <td key={"legend-td" + idx + 3}>
                   <div
-                    class={
+                    className={
                       guess.continent
                         ? "icon icon-correct"
                         : "icon icon-not-correct"
@@ -30,8 +53,8 @@ const Legend = ({ guessCount, MAX_GUESSES, totalGuesses }) => {
                   </div>
                 </td>
                 <td key={"legend-td" + idx + 4}>
-                <div
-                    class={
+                  <div
+                    className={
                       guess.border
                         ? "icon icon-correct"
                         : "icon icon-not-correct"
@@ -42,7 +65,7 @@ const Legend = ({ guessCount, MAX_GUESSES, totalGuesses }) => {
                 </td>
                 <td key={"legend-td" + idx + 5}>
                   <div
-                    class={
+                    className={
                       guess.hemisphere
                         ? "icon icon-correct"
                         : "icon icon-not-correct"
