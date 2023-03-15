@@ -8,18 +8,18 @@ const Modal = ({ setIsOpen }) => {
       <div onClick={() => setIsOpen(false)} />
          <div className="modal">
           <div className="modalHeader">
-            <h5 className="heading">HOW TO PLAY</h5>
+            <h1>HOW TO PLAY</h1>
           </div>
           <button className="closeBtn" onClick={() => setIsOpen(false)}>
             <RiCloseLine style={{ marginBottom: "-3px" }} />
           </button>
           <div className="modalContent">
             <p>
-              <h3>Objective:</h3> 
+              <h2>Objective:</h2> 
               Use the street view image to correctly guess which country in the world you are in.
             </p>
             <p>
-              <h3>Gameplay:</h3> 
+              <h2>Gameplay:</h2> 
               - Look closely at the street view image to gather clues about the countries location.
               <br />
               - Type your guess into the input area at the bottom of the screen.
@@ -42,7 +42,7 @@ const Modal = ({ setIsOpen }) => {
               - Icons will turn green if your guess matches the attributes of the icons.
             </p>
             <p>
-              <h3>Tips:</h3> 
+              <h2>Tips:</h2> 
               - Pay close attention to the details in the street view image.
               <br />
               - Use the legend to guide your next guess.
@@ -50,7 +50,7 @@ const Modal = ({ setIsOpen }) => {
               - Take note of the information displayed in the legend to help you make more informed guesses.
             </p>
             <p>
-              <h3 className="footNote">Good luck and have fun playing Streetle!</h3>
+              <h2 className="footNote">Good luck and have fun playing Streetle!</h2>
             </p>
           </div>
           <div className="modalActions">
