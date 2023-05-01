@@ -7,7 +7,7 @@ import "./Game.css";
 import Modal from "../Modals/HowToPlayModal";
 
 const Game = () => {
-  const MAX_GUESSES = 5;
+  const MAX_GUESSES = 2;
 
   const [isGameOver, setIsGameOver] = useState(false);
   const [guessCount, setGuessCount] = useState(0);
@@ -208,8 +208,6 @@ const Game = () => {
   }
 
   return (
-    <>
-      {!isGameOver ? (
         <>
           <Legend
             MAX_GUESSES={MAX_GUESSES}
@@ -239,15 +237,13 @@ const Game = () => {
           </button>
           </form>
           {isOpen && <Modal setIsOpen={setIsOpen} />}
-        </>
-      ) : (
-        <Summary
+          {isGameOver && <Summary
           didWin={didWin}
           score={guessCount}
           country={currentCountry.name}
-        />
-      )}{" "}
-    </>
+          totalGuesses={totalGuesses}
+        /> }
+        </>
   );
 };
 
