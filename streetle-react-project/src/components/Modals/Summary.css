@@ -1,0 +1,44 @@
+.summary-modal {
+    width: 35vw;
+    height: 80vh;
+    background: white;
+    color: white;
+    z-index: 10;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .summary-modalHeader {
+    background:white;
+    color:#2c3e50;
+    overflow: hidden;
+    text-align: center;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    border-bottom: 1px solid #2c3e50;
+  }
+  
+  .summary-modalContent {
+    padding: 0 10px 0 15px;
+    font-size: 14px;
+    color: #2c3e50;
+    text-align: left;
+    white-space: pre-line;
+  }
+.overlay{
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    opacity: .85;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9;
+}
+.summary-item{
+  transition: .3s;
+}
