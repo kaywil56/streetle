@@ -51,11 +51,12 @@ const Map = ({ currentLocation }) => {
         .then(() => {
           panorama.setPano(nearestLatLng);
           panorama.setPov({           
-            heading: 165,
+            heading: 0,
             pitch: 0,
           });
           panorama.setVisible(true);
           panorama.setOptions(panoOptions);
+          panorama.setZoom(0)
         });
     });
   };
