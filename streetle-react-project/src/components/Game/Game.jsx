@@ -5,6 +5,7 @@ import Summary from "../Modals/Summary";
 import Legend from "./Legend";
 import "./Game.css";
 import Modal from "../Modals/HowToPlayModal";
+import InteractiveMap from "./InteractiveMap";
 
 const Game = () => {
   const MAX_GUESSES = 2;
@@ -215,6 +216,8 @@ const Game = () => {
             totalGuesses={totalGuesses}
           />
           <Map currentLocation={currentLocation} />
+          {/* UNCOMMENT THIS! */}
+          {/* <InteractiveMap /> */}
           <form className="guessArea" onSubmit={checkGuess}>
             <input
               value={guess}
