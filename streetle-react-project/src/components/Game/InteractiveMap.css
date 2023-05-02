@@ -1,0 +1,53 @@
+#zoom-and-pan{
+    width: 100%;
+    height: 100%;
+    transform-origin: 0px 0px;
+    transform: scale(1) translate(0px, 0px);
+    cursor: grab;
+  }
+  
+  #svg-map-outer {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    bottom: 10px;
+    height: 350px;
+    width: 60%;
+    overflow: hidden;
+    border: 3px solid #333;
+    z-index: 100;
+    background-color: white;
+  }
+  
+  svg path{
+    stroke-width: 1px;
+    stroke: white;
+  }
+  
+  svg{
+    width: 100%;
+    height: auto;
+  }
+  
+  path:hover{
+    opacity: 90%;
+  }
+
+  #hover-activate{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    bottom: 10px;
+    z-index: 100;
+    color: #333;
+    font-size: xx-large;
+    font-weight: bold;
+    cursor: pointer;
+    opacity: .8;
+    transition: .3s;
+  }
+
+  #hover-activate:hover{
+    position: absolute;
+    opacity: 1;
+  }
