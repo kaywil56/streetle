@@ -18,8 +18,8 @@ const Map = ({ currentLocation }) => {
   let adjust;
   let panoOptions = {
     scrollwheel: true,
-    disableDefaultUI: true,
-    clickToGo: false
+    clickToGo: false,
+    disableDefaultUI: true
   };
 
   // Fetch a new panorama
@@ -57,12 +57,37 @@ const Map = ({ currentLocation }) => {
           panorama.setVisible(true);
           panorama.setOptions(panoOptions);
           panorama.setZoom(0)
+
         });
     });
   };
   // If the currentLocation prop changes; fetch a new country
   useEffect(() => {
     getNearestPanorama();
+    window.addEventListener(
+      'keydown',
+      (event) => {
+        if (
+          (
+            // Change or remove this condition depending on your requirements.
+            event.key === 'ArrowUp' || // Move forward
+            event.key === 'ArrowDown' || // Move forward
+            event.key === 'ArrowLeft' || // Pan left
+            event.key === 'ArrowRight' || // Pan right
+            event.key === '+' || // Zoom in
+            event.key === '=' || // Zoom in
+            event.key === '_' || // Zoom out
+            event.key === '-' // Zoom out
+          ) &&
+          !event.metaKey &&
+          !event.altKey &&
+          !event.ctrlKey
+        ) {
+          event.stopPropagation()
+        };
+      },
+      { capture: true },
+    );
   }, [currentLocation]);
 
   return <div 
