@@ -17,7 +17,7 @@ const Game = () => {
   const [currentLocation, setCurrentLocation] = useState({});
   const [didWin, setDidWin] = useState(false);
   const [suggest, setSuggest] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   // Init array with question marks for legend
   const [totalGuesses, setTotalGuesses] = useState([...Array(MAX_GUESSES)]);
   const [guessedCountries, setGuessedCountries] = useState([]);
@@ -230,6 +230,10 @@ const Game = () => {
   const handleHowToPlayModal = (e) => {
     e.preventDefault();
   }
+
+  useEffect(() => {
+    setIsOpen(true);
+  }, []);
 
   return (
         <>
