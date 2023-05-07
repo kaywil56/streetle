@@ -20,6 +20,8 @@ const Game = () => {
   const [isOpen, setIsOpen] = useState(false);
   // Init array with question marks for legend
   const [totalGuesses, setTotalGuesses] = useState([...Array(MAX_GUESSES)]);
+  const [guessedCountries, setGuessedCountries] = useState([]);
+  const [showAlert, setShowAlert] = useState(false);
 
   // Text directional dataset excludes South (-155.201, 155.201)
   // If bearing direction not between these ranges it must be south
@@ -94,6 +96,11 @@ const Game = () => {
     const guessCountryCenter = countries.find(
       ({ name }) => name.toLowerCase() === guess.toLowerCase()
     );
+    // Check if guess is already in guessedCountries list
+    if (!guessedCountries.includes(guess)) {
+      // Add guess to guessedCountries list
+      setGuessedCountries([...guessedCountries, guess]);
+    }
     return guessCountryCenter;
   };
 
@@ -177,6 +184,22 @@ const Game = () => {
     let guessCountry = getGuessCountry();
     return guessCountry.hemisphere === currentCountry.hemisphere;
   };
+
+  useEffect(() => {
+    const guessCountryCenter = getGuessCountry();
+    if (guessCountryCenter) {
+      // Check if the guess is already in guessedCountries
+      const isAlreadyGuessed = guessedCountries.some(
+        (country) => country.name === guessCountryCenter.name
+      );
+      if (isAlreadyGuessed) {
+        alert('You already guessed that country!');
+        setGuess("");
+      } else {
+        setGuessedCountries([...guessedCountries, guessCountryCenter]);
+      }
+    }
+  }, [guess]);
 
   // When guess is being typed, refill auto suggest list
   useEffect(() => {
