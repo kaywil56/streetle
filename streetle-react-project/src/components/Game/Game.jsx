@@ -6,6 +6,7 @@ import Legend from "./Legend";
 import "./Game.css";
 import Modal from "../Modals/HowToPlayModal";
 import InteractiveMap from "./InteractiveMap";
+import MoonLoader from "react-spinners/MoonLoader";
 
 const Game = () => {
   const MAX_GUESSES = 2;
@@ -22,6 +23,7 @@ const Game = () => {
   const [totalGuesses, setTotalGuesses] = useState([...Array(MAX_GUESSES)]);
   const [guessedCountries, setGuessedCountries] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // Text directional dataset excludes South (-155.201, 155.201)
   // If bearing direction not between these ranges it must be south
@@ -209,7 +211,10 @@ const Game = () => {
   // Choose random country on mount
   useEffect(() => {
     let randomCountryIdx = Math.floor(Math.random() * countries.length);
-    setCurrentCountry(countries[randomCountryIdx]);
+    setTimeout(() => {
+      setCurrentCountry(countries[randomCountryIdx]);
+      setLoading(false);
+    }, 3000);
     console.log(currentCountry);
     // let randomLocationId = Math.floor(Math.random() * currentCountry?.largest_cities.length);
     // setCurrentLocation(currentCountry.largest_cities[randomLocationId])
@@ -236,6 +241,12 @@ const Game = () => {
   }, []);
 
   return (
+    <>
+      {loading ? (
+        <div className="spinner-container">
+          <MoonLoader color="#123abc" loading={loading} size={50} />
+        </div>
+      ) : (
         <>
           <Legend
             MAX_GUESSES={MAX_GUESSES}
@@ -266,14 +277,16 @@ const Game = () => {
               ???
           </button>
           </form>
-          {isOpen && <Modal setIsOpen={setIsOpen} />}
-          {isGameOver && <Summary
-          didWin={didWin}
-          score={guessCount}
-          country={currentCountry.name}
-          totalGuesses={totalGuesses}
-        /> }
+            {isOpen && <Modal setIsOpen={setIsOpen} />}
+            {isGameOver && <Summary
+            didWin={didWin}
+            score={guessCount}
+            country={currentCountry.name}
+            totalGuesses={totalGuesses}
+          /> }
         </>
+      )}
+    </>
   );
 };
 
