@@ -59,7 +59,7 @@ const Modal = ({ setIsOpen }) => {
                 className="cancelBtn"
                 onClick={() => setIsOpen(false)}
               >
-                Cancel
+                PLAY
               </button>
             </div>
           </div>

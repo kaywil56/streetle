@@ -263,7 +263,7 @@ const Game = () => {
           </form>
           <form onSubmit={handleHowToPlayModal} className="modalArea">
           <button className="primaryBtn" type="submit" onClick={() => setIsOpen(true)}>
-              ???
+              HOW TO PLAY
           </button>
           </form>
           {isOpen && <Modal setIsOpen={setIsOpen} />}
