@@ -49,6 +49,7 @@ button{
   color: white;
   background: #ff3e4e;
   transition: all 0.25s ease;
+  width: 150px;
 }
 
 .primaryBtn:hover {
