@@ -6,7 +6,6 @@ import Legend from "./Legend";
 import "./Game.css";
 import Modal from "../Modals/HowToPlayModal";
 import InteractiveMap from "./InteractiveMap";
-import MoonLoader from "react-spinners/MoonLoader";
 
 const Game = () => {
   const MAX_GUESSES = 2;
@@ -23,7 +22,6 @@ const Game = () => {
   const [totalGuesses, setTotalGuesses] = useState([...Array(MAX_GUESSES)]);
   const [guessedCountries, setGuessedCountries] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
-  const [loading, setLoading] = useState(true);
 
   // Text directional dataset excludes South (-155.201, 155.201)
   // If bearing direction not between these ranges it must be south
@@ -211,10 +209,7 @@ const Game = () => {
   // Choose random country on mount
   useEffect(() => {
     let randomCountryIdx = Math.floor(Math.random() * countries.length);
-    setTimeout(() => {
-      setCurrentCountry(countries[randomCountryIdx]);
-      setLoading(false);
-    }, 3000);
+    setCurrentCountry(countries[randomCountryIdx]);
     console.log(currentCountry);
     // let randomLocationId = Math.floor(Math.random() * currentCountry?.largest_cities.length);
     // setCurrentLocation(currentCountry.largest_cities[randomLocationId])
@@ -242,50 +237,42 @@ const Game = () => {
 
   return (
     <>
-      {loading ? (
-        <div className="spinner-container">
-          <MoonLoader color="#123abc" loading={loading} size={50} />
-        </div>
-      ) : (
-        <>
-          <Legend
-            MAX_GUESSES={MAX_GUESSES}
-            guessCount={guessCount}
-            totalGuesses={totalGuesses}
-          />
-          <Map currentLocation={currentLocation} />
-          {/* UNCOMMENT THIS! */}
-          {/* <InteractiveMap /> */}
-          <form className="guessArea" onSubmit={checkGuess}>
-            <input
-              value={guess}
-              onChange={(e) => setGuess(e.target.value)}
-              placeholder="Enter a country"
-              list="autocomplete"
-            ></input>
-            {guess.length > 0 && (
-              <datalist id="autocomplete">
-                {suggest.map((country, idx) => {
-                  return <option id={idx} value={country.name} />;
-                })}
-              </datalist>
-            )}
-            <button type="submit">Guess</button>
-          </form>
-          <form onSubmit={handleHowToPlayModal} className="modalArea">
-          <button className="primaryBtn" type="submit" onClick={() => setIsOpen(true)}>
-              ???
-          </button>
-          </form>
-            {isOpen && <Modal setIsOpen={setIsOpen} />}
-            {isGameOver && <Summary
-            didWin={didWin}
-            score={guessCount}
-            country={currentCountry.name}
-            totalGuesses={totalGuesses}
-          /> }
-        </>
-      )}
+      <Legend
+        MAX_GUESSES={MAX_GUESSES}
+        guessCount={guessCount}
+        totalGuesses={totalGuesses}
+      />
+      <Map currentLocation={currentLocation} />
+      {/* UNCOMMENT THIS! */}
+      {/* <InteractiveMap /> */}
+      <form className="guessArea" onSubmit={checkGuess}>
+        <input
+          value={guess}
+          onChange={(e) => setGuess(e.target.value)}
+          placeholder="Enter a country"
+          list="autocomplete"
+        ></input>
+        {guess.length > 0 && (
+          <datalist id="autocomplete">
+            {suggest.map((country, idx) => {
+              return <option id={idx} value={country.name} />;
+            })}
+          </datalist>
+        )}
+        <button type="submit">Guess</button>
+      </form>
+      <form onSubmit={handleHowToPlayModal} className="modalArea">
+      <button className="primaryBtn" type="submit" onClick={() => setIsOpen(true)}>
+          ???
+      </button>
+      </form>
+        {isOpen && <Modal setIsOpen={setIsOpen} />}
+        {isGameOver && <Summary
+        didWin={didWin}
+        score={guessCount}
+        country={currentCountry.name}
+        totalGuesses={totalGuesses}
+      /> }
     </>
   );
 };

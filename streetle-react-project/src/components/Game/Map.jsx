@@ -1,5 +1,5 @@
 import { Loader } from "@googlemaps/js-api-loader";
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import './Map.css'
 
 const loader = new Loader({
@@ -10,6 +10,7 @@ const loader = new Loader({
 const Map = ({ currentLocation }) => {
   const ADJUSTMENT_AMOUNT = 0.04
   let mapElement = useRef(null);
+  const [loading, setLoading] = useState(true);
   let googleStreetViewService;
   let panorama;
   // Value for panoramas nearest lat and lang based and given coords
@@ -24,6 +25,7 @@ const Map = ({ currentLocation }) => {
 
   // Fetch a new panorama
   const getNearestPanorama = () => {
+    setLoading(true);
     loader.load().then((google) => {
       // Initialize google street view service
       googleStreetViewService = new google.maps.StreetViewService();
@@ -57,7 +59,7 @@ const Map = ({ currentLocation }) => {
           panorama.setVisible(true);
           panorama.setOptions(panoOptions);
           panorama.setZoom(0)
-
+          setLoading(false);
         });
     });
   };
@@ -90,9 +92,17 @@ const Map = ({ currentLocation }) => {
     );
   }, [currentLocation]);
 
-  return <div 
-    id="map" 
-    ref={mapElement}
-  />;
+  useEffect(() => {
+    if (!loading) {
+      mapElement.current.style.opacity = 1;
+    }
+  }, [loading]);
+
+  return (
+    <div>
+      {loading && <div>Loading...</div>}
+      <div id="map" ref={mapElement} style={{ opacity: 0, transition: 'opacity 5.5s' }} />
+    </div>
+  );
 };
 export default Map;
