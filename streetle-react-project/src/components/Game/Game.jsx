@@ -21,7 +21,6 @@ const Game = () => {
   // Init array with question marks for legend
   const [totalGuesses, setTotalGuesses] = useState([...Array(MAX_GUESSES)]);
   const [guessedCountries, setGuessedCountries] = useState([]);
-  const [showAlert, setShowAlert] = useState(false);
 
   // Text directional dataset excludes South (-155.201, 155.201)
   // If bearing direction not between these ranges it must be south
@@ -49,45 +48,54 @@ const Game = () => {
   };
 
   // Checks if user input matches the current country
-  const checkGuess = (e) => {
-    e.preventDefault();
-    let distanceBetween = checkDistanceBetween();
-    let bearing = calcBearing();
-    let bearingText = getRegionFromBearing();
-    let isBordering = isBorderingCountry();
-    let sameContinent = isInSameContinent();
-    let sameHemisphere = isInSameHemisphere();
-    let updatedList = totalGuesses;
+  const checkGuess = () => {
+    if (isValidGuess(guess)) {
+      console.log("This is the guesss" + guess);
+      let distanceBetween = checkDistanceBetween();
+      let bearing = calcBearing();
+      let bearingText = getRegionFromBearing();
+      let isBordering = isBorderingCountry();
+      let sameContinent = isInSameContinent();
+      let sameHemisphere = isInSameHemisphere();
+      let updatedList = totalGuesses;
 
-    const guessHintInfo = {
-      distance: distanceBetween,
-      bearing: bearingText,
-      border: isBordering,
-      continent: sameContinent,
-      hemisphere: sameHemisphere,
-      guess: guess,
-    };
-    // Update legend list with the most recent guess, KM away from correct guess and direction
-    updatedList[guessCount] = guessHintInfo;
-    setTotalGuesses(updatedList);
-    setGuessCount(guessCount + 1);
-    console.log(
-      "angle of direction from guess to correct country in degrees:",
-      bearing,
-      bearingText
-    );
-    console.log(`${guess} to ${currentCountry.name} is ${distanceBetween}KM`);
-    // Convert to lower case to stop case sensitive input and check the guess
-    if (guess.toLowerCase() == currentCountry.name.toLowerCase()) {
-      // Reset guess
-      setGuess("");
-      setDidWin(true);
-      setIsGameOver(true);
-      console.log("Win");
-    } else if (guessCount == MAX_GUESSES - 1) {
-      setIsGameOver(true);
+      setGuessedCountries([...guessedCountries, guess]);
+
+      const guessHintInfo = {
+        distance: distanceBetween,
+        bearing: bearingText,
+        border: isBordering,
+        continent: sameContinent,
+        hemisphere: sameHemisphere,
+        guess: guess,
+      };
+      // Update legend list with the most recent guess, KM away from correct guess and direction
+      updatedList[guessCount] = guessHintInfo;
+      setTotalGuesses(updatedList);
+      setGuessCount(guessCount + 1);
+      console.log(
+        "angle of direction from guess to correct country in degrees:",
+        bearing,
+        bearingText
+      );
+      console.log(`${guess} to ${currentCountry.name} is ${distanceBetween}KM`);
+      // Convert to lower case to stop case sensitive input and check the guess
+      if (guess.toLowerCase() == currentCountry.name.toLowerCase()) {
+        // Reset guess
+        setGuess("");
+        setDidWin(true);
+        setIsGameOver(true);
+        console.log("Win");
+      } else if (guessCount == MAX_GUESSES - 1) {
+        setIsGameOver(true);
+      }
     }
     setGuess("");
+  };
+
+  const isValidGuess = (guess) => {
+    // Check if guess is already in guessedCountries list
+    return !guessedCountries.includes(guess)
   };
 
   // Gets the lat and long for the center of the guessed country
@@ -96,11 +104,6 @@ const Game = () => {
     const guessCountryCenter = countries.find(
       ({ name }) => name.toLowerCase() === guess.toLowerCase()
     );
-    // Check if guess is already in guessedCountries list
-    if (!guessedCountries.includes(guess)) {
-      // Add guess to guessedCountries list
-      setGuessedCountries([...guessedCountries, guess]);
-    }
     return guessCountryCenter;
   };
 
@@ -152,17 +155,6 @@ const Game = () => {
     return beta.toFixed(3);
   };
 
-  // Fill auto suggest list based on guess
-  const autocompleteMatch = () => {
-    let reg = new RegExp(guess);
-    let filteredCountryList = countries.filter((country) => {
-      if (country.name.match(reg)) {
-        return country;
-      }
-    });
-    setSuggest(filteredCountryList);
-  };
-
   const isBorderingCountry = () => {
     let guessCountry = getGuessCountry();
     let isBorder = false;
@@ -185,27 +177,6 @@ const Game = () => {
     return guessCountry.hemisphere === currentCountry.hemisphere;
   };
 
-  useEffect(() => {
-    const guessCountryCenter = getGuessCountry();
-    if (guessCountryCenter) {
-      // Check if the guess is already in guessedCountries
-      const isAlreadyGuessed = guessedCountries.some(
-        (country) => country.name === guessCountryCenter.name
-      );
-      if (isAlreadyGuessed) {
-        alert('You already guessed that country!');
-        setGuess("");
-      } else {
-        setGuessedCountries([...guessedCountries, guessCountryCenter]);
-      }
-    }
-  }, [guess]);
-
-  // When guess is being typed, refill auto suggest list
-  useEffect(() => {
-    autocompleteMatch();
-  }, [guess]);
-
   // Choose random country on mount
   useEffect(() => {
     let randomCountryIdx = Math.floor(Math.random() * countries.length);
@@ -227,13 +198,15 @@ const Game = () => {
     console.log("current location: " + JSON.stringify(currentLocation));
   }, [currentCountry]);
 
+  useEffect(() => {
+    if (guess) {
+      checkGuess();
+    }
+  }, [guess]);
+
   const handleHowToPlayModal = (e) => {
     e.preventDefault();
-  }
-
-  useEffect(() => {
-    setIsOpen(true);
-  }, []);
+  };
 
   return (
     <>
@@ -243,36 +216,25 @@ const Game = () => {
         totalGuesses={totalGuesses}
       />
       <Map currentLocation={currentLocation} />
-      {/* UNCOMMENT THIS! */}
-      {/* <InteractiveMap /> */}
-      <form className="guessArea" onSubmit={checkGuess}>
-        <input
-          value={guess}
-          onChange={(e) => setGuess(e.target.value)}
-          placeholder="Enter a country"
-          list="autocomplete"
-        ></input>
-        {guess.length > 0 && (
-          <datalist id="autocomplete">
-            {suggest.map((country, idx) => {
-              return <option id={idx} value={country.name} />;
-            })}
-          </datalist>
-        )}
-        <button type="submit">Guess</button>
-      </form>
+      <InteractiveMap setGuess={setGuess} checkGuess={checkGuess} />
       <form onSubmit={handleHowToPlayModal} className="modalArea">
-      <button className="primaryBtn" type="submit" onClick={() => setIsOpen(true)}>
-          ???
-      </button>
+        <button
+          className="primaryBtn"
+          type="submit"
+          onClick={() => setIsOpen(true)}
+        >
+          HOW TO PLAY
+        </button>
       </form>
-        {isOpen && <Modal setIsOpen={setIsOpen} />}
-        {isGameOver && <Summary
-        didWin={didWin}
-        score={guessCount}
-        country={currentCountry.name}
-        totalGuesses={totalGuesses}
-      /> }
+      {isOpen && <Modal setIsOpen={setIsOpen} />}
+      {isGameOver && (
+        <Summary
+          didWin={didWin}
+          score={guessCount}
+          country={currentCountry.name}
+          totalGuesses={totalGuesses}
+        />
+      )}
     </>
   );
 };
