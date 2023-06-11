@@ -80,12 +80,7 @@ const Game = () => {
         bearing,
         bearingText
       );
-      console.log(`${guess} to ${currentCountry.name} is ${distanceBetween}KM`);
-      // Convert to lower case to stop case sensitive input and check the guess
-      console.log("=================UL=================")
-      console.log(updatedList)
-      console.log("=================UL=================")        
-
+      console.log(`${guess} to ${currentCountry.name} is ${distanceBetween}KM`);      
       if (guess.toLowerCase() == currentCountry.name.toLowerCase()) {
         // Reset guess
         setDidWin(true);
@@ -164,7 +159,6 @@ const Game = () => {
     let guessCountry = getGuessCountry();
     let isBorder = false;
     guessCountry.bordering_countries.forEach((borderCountry) => {
-      console.log(borderCountry);
       if (borderCountry.toLowerCase() === currentCountry.name.toLowerCase()) {
         isBorder = true;
       }
