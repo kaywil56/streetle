@@ -8,7 +8,7 @@ import Modal from "../Modals/HowToPlayModal";
 import InteractiveMap from "./InteractiveMap";
 
 const Game = () => {
-  const MAX_GUESSES = 2;
+  const MAX_GUESSES = 5;
 
   const [isGameOver, setIsGameOver] = useState(false);
   const [guessCount, setGuessCount] = useState(0);
@@ -19,7 +19,9 @@ const Game = () => {
   const [suggest, setSuggest] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
   // Init array with question marks for legend
-  const [totalGuesses, setTotalGuesses] = useState([...Array(MAX_GUESSES)]);
+  const [totalGuesses, setTotalGuesses] = useState([]);
+  // const [totalGuesses, setTotalGuesses] = useState([...Array(MAX_GUESSES)]);
+
   const [guessedCountries, setGuessedCountries] = useState([]);
 
   // Text directional dataset excludes South (-155.201, 155.201)
@@ -78,15 +80,13 @@ const Game = () => {
         bearing,
         bearingText
       );
-      console.log(`${guess} to ${currentCountry.name} is ${distanceBetween}KM`);
-      // Convert to lower case to stop case sensitive input and check the guess
+      console.log(`${guess} to ${currentCountry.name} is ${distanceBetween}KM`);      
       if (guess.toLowerCase() == currentCountry.name.toLowerCase()) {
         // Reset guess
-        setGuess("");
         setDidWin(true);
         setIsGameOver(true);
         console.log("Win");
-      } else if (guessCount == MAX_GUESSES - 1) {
+      } else if (guessCount === MAX_GUESSES - 1) {
         setIsGameOver(true);
       }
     }
@@ -159,7 +159,6 @@ const Game = () => {
     let guessCountry = getGuessCountry();
     let isBorder = false;
     guessCountry.bordering_countries.forEach((borderCountry) => {
-      console.log(borderCountry);
       if (borderCountry.toLowerCase() === currentCountry.name.toLowerCase()) {
         isBorder = true;
       }
