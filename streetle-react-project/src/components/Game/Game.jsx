@@ -8,7 +8,7 @@ import Modal from "../Modals/HowToPlayModal";
 import InteractiveMap from "./InteractiveMap";
 
 const Game = () => {
-  const MAX_GUESSES = 2;
+  const MAX_GUESSES = 5;
 
   const [isGameOver, setIsGameOver] = useState(false);
   const [guessCount, setGuessCount] = useState(0);
@@ -80,13 +80,16 @@ const Game = () => {
       );
       console.log(`${guess} to ${currentCountry.name} is ${distanceBetween}KM`);
       // Convert to lower case to stop case sensitive input and check the guess
+      console.log("=================UL=================")
+      console.log(updatedList)
+      console.log("=================UL=================")        
+
       if (guess.toLowerCase() == currentCountry.name.toLowerCase()) {
         // Reset guess
-        setGuess("");
         setDidWin(true);
         setIsGameOver(true);
         console.log("Win");
-      } else if (guessCount == MAX_GUESSES - 1) {
+      } else if (guessCount === MAX_GUESSES - 1) {
         setIsGameOver(true);
       }
     }
