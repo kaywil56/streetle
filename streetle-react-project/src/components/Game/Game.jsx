@@ -19,7 +19,9 @@ const Game = () => {
   const [suggest, setSuggest] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
   // Init array with question marks for legend
-  const [totalGuesses, setTotalGuesses] = useState([...Array(MAX_GUESSES)]);
+  const [totalGuesses, setTotalGuesses] = useState([]);
+  // const [totalGuesses, setTotalGuesses] = useState([...Array(MAX_GUESSES)]);
+
   const [guessedCountries, setGuessedCountries] = useState([]);
 
   // Text directional dataset excludes South (-155.201, 155.201)
