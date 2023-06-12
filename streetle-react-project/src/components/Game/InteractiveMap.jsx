@@ -89,11 +89,15 @@ const InteractiveMap = ({ setGuess }) => {
   return (
     <>
       {isActive ? (
+        <>
         <div
           onMouseLeave={() => setIsActive(false)}
           id="svg-map-outer"
           ref={reshapeRef}
         >
+          <div className="countryName">
+            {name}
+          </div>
           <div
             id="zoom-and-pan"
             onMouseDown={handleMouseDown}
@@ -2172,6 +2176,7 @@ const InteractiveMap = ({ setGuess }) => {
             </svg>
           </div>
         </div>
+        </>
       ) : (
         <p onMouseOver={() => setIsActive(true)} id="hover-activate">
           GUESS

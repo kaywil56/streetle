@@ -95,7 +95,7 @@ const Game = () => {
 
   const isValidGuess = (guess) => {
     // Check if guess is already in guessedCountries list
-    return !guessedCountries.includes(guess)
+    return !guessedCountries.includes(guess) && getGuessCountry();
   };
 
   // Gets the lat and long for the center of the guessed country
@@ -104,7 +104,8 @@ const Game = () => {
     const guessCountryCenter = countries.find(
       ({ name }) => name.toLowerCase() === guess.toLowerCase()
     );
-    return guessCountryCenter;
+
+    return guessCountryCenter ? guessCountryCenter : false
   };
 
   // Checks the distance between the guess and current country coords
