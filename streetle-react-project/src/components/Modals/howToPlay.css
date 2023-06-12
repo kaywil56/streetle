@@ -41,6 +41,19 @@
     margin-bottom: 10px;
     width: 100%;
   }
+
+  .img-cont{
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .img-cont > img{
+    max-width: 50%;
+  }
+
+  .example-text{
+    font-weight: bold;
+  }
   
   .actionsContainer {
     display: flex;
