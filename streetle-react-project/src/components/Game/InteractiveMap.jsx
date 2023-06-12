@@ -1,14 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./InteractiveMap.css";
 
-const DRAG_THRESHOLD = 5; // Adjust this value as needed
+const DRAG_THRESHOLD = 1; // Adjust this value as needed
 const MIN_ZOOM = 0.8; // Adjust the minimum zoom level as needed
 const MAX_ZOOM = 10; // Adjust the maximum zoom level as needed
 
 const InteractiveMap = ({ setGuess, isGameOver }) => {
   const [dragging, setDragging] = useState(false);
   const [isActive, setIsActive] = useState(false);
-  const [name, setName] = useState("");
+  const [name, setName] = useState("Canada");
   const [zoom, setZoom] = useState(MIN_ZOOM);
   const [points, setPoints] = useState({
     x: 44,
@@ -18,18 +18,6 @@ const InteractiveMap = ({ setGuess, isGameOver }) => {
   const [dragStartPoint, setDragStartPoint] = useState({ x: 0, y: 0 });
   const mapRef = useRef(null);
   const reshapeRef = useRef(null);
-
-  console.log("zoom: ", zoom);
-  console.log("points: ", points);
-
-  useEffect(() => {
-    if (zoom === MIN_ZOOM) {
-      setPoints({
-        x: 44,
-        y: 44,
-      });
-    }
-  }, [zoom]);
 
   const handleMouseDown = (e) => {
     e.preventDefault();
@@ -109,7 +97,7 @@ const InteractiveMap = ({ setGuess, isGameOver }) => {
       }
     }
   };
-  
+
   if (!isGameOver) {
     return (
       <>
