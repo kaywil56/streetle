@@ -58,3 +58,14 @@
     left: 1000px;
     z-index: 1000;
   }
+  .countryName {
+    position: absolute;
+    text-align: center;
+    left: 50%;
+    transform: translate(-50%, 0);
+    color:#2c3e50;
+    z-index: 100000;
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    border-bottom: 1px solid black;
+  }
