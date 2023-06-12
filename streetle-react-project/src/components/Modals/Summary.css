@@ -42,3 +42,9 @@
 .summary-item{
   transition: .3s;
 }
+
+.outcome-text{
+  font-size: large;
+  font-weight: bold;
+  text-transform: uppercase;
+}
