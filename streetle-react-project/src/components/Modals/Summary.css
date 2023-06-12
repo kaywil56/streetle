@@ -33,7 +33,7 @@
     width: 100vw;
     height: 100vh;
     background-color: black;
-    opacity: .85;
+    opacity: .95;
     position: absolute;
     top: 0;
     left: 0;
@@ -41,4 +41,10 @@
 }
 .summary-item{
   transition: .3s;
+}
+
+.outcome-text{
+  font-size: large;
+  font-weight: bold;
+  text-transform: uppercase;
 }

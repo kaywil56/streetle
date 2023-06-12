@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./InteractiveMap.css";
 
-const DRAG_THRESHOLD = 1; // Adjust this value as needed
+const DRAG_THRESHOLD = .25; // Adjust this value as needed
 const MIN_ZOOM = 0.8; // Adjust the minimum zoom level as needed
 const MAX_ZOOM = 10; // Adjust the maximum zoom level as needed
 
-const InteractiveMap = ({ setGuess, isGameOver }) => {
+const InteractiveMap = ({ setGuess, isGameOver, isOpen }) => {
   const [dragging, setDragging] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [name, setName] = useState("Canada");
@@ -98,7 +98,7 @@ const InteractiveMap = ({ setGuess, isGameOver }) => {
     }
   };
 
-  if (!isGameOver) {
+  if (!isGameOver && !isOpen) {
     return (
       <>
         {isActive ? (

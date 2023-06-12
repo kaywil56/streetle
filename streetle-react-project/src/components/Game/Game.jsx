@@ -16,7 +16,6 @@ const Game = () => {
   const [currentCountry, setCurrentCountry] = useState({});
   const [currentLocation, setCurrentLocation] = useState({});
   const [didWin, setDidWin] = useState(false);
-  const [suggest, setSuggest] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
   // Init array with question marks for legend
   const [totalGuesses, setTotalGuesses] = useState([]);
@@ -216,14 +215,14 @@ const Game = () => {
         totalGuesses={totalGuesses}
       />
       <Map currentLocation={currentLocation} />
-      <InteractiveMap setGuess={setGuess} checkGuess={checkGuess} isGameOver={isGameOver} />
+      <InteractiveMap setGuess={setGuess} checkGuess={checkGuess} isGameOver={isGameOver} isOpen={isOpen} />
       <form onSubmit={handleHowToPlayModal} className="modalArea">
         <button
           className="primaryBtn"
           type="submit"
           onClick={() => setIsOpen(true)}
         >
-          HOW TO PLAY
+          ?
         </button>
       </form>
       {isOpen && <Modal setIsOpen={setIsOpen} />}
