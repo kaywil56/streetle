@@ -41,7 +41,7 @@ const Legend = ({ guessCount, MAX_GUESSES, totalGuesses }) => {
                   </div>
                 </td>
                 <td key={"legend-td" + idx + 2}>{guess.distance}KM</td>
-                <td key={"legend-td" + idx + 3}>
+                <td title="Same continent" key={"legend-td" + idx + 3}>
                   <div
                     className={
                       guess.continent
@@ -52,7 +52,7 @@ const Legend = ({ guessCount, MAX_GUESSES, totalGuesses }) => {
                     <img src="/icons/africa.png" alt="continent" />
                   </div>
                 </td>
-                <td key={"legend-td" + idx + 4}>
+                <td title="bordering" key={"legend-td" + idx + 4}>
                   <div
                     className={
                       guess.border
@@ -63,7 +63,7 @@ const Legend = ({ guessCount, MAX_GUESSES, totalGuesses }) => {
                     <img src="/icons/border.png" alt="continent" />
                   </div>
                 </td>
-                <td key={"legend-td" + idx + 5}>
+                <td title="Same hemisphere" key={"legend-td" + idx + 5}>
                   <div
                     className={
                       guess.hemisphere
