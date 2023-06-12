@@ -216,7 +216,7 @@ const Game = () => {
         totalGuesses={totalGuesses}
       />
       <Map currentLocation={currentLocation} />
-      <InteractiveMap setGuess={setGuess} checkGuess={checkGuess} />
+      <InteractiveMap setGuess={setGuess} checkGuess={checkGuess} isGameOver={isGameOver} />
       <form onSubmit={handleHowToPlayModal} className="modalArea">
         <button
           className="primaryBtn"
