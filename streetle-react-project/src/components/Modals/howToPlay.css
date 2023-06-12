@@ -28,6 +28,8 @@
     color: #2c3e50;
     text-align: left;
     white-space: pre-line;
+    overflow-y: scroll;
+    height: 80%;
   }
 
   .footNote {
@@ -35,7 +37,6 @@
   }
   
   .modalActions {
-    position: absolute;
     bottom: 2px;
     margin-bottom: 10px;
     width: 100%;
