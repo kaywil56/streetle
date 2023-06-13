@@ -23,3 +23,7 @@ streetle is a geo location guessing game
 
 To take the streetview API out of dev mode create a ***.env*** file in the root directory <br>
 In ***.env*** add this line ```VITE_STREET_VIEW_API_KEY=<Your API key>```
+
+## Live Deploy
+[Live Deploy](https://streetle-29d87.web.app/)
+
