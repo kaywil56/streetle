@@ -1,0 +1,20 @@
+[
+    {
+        "bordering_countries": [
+          "Bolivia",
+          "Brazil",
+          "Chile",
+          "Paraguay",
+          "Uruguay"
+        ],
+        "continent": "South America",
+        "country_center": { "latitude": -38.416097, "longitude": -63.616672 },
+        "hemisphere": "Southern Hemisphere",
+        "largest_cities": [
+          { "latitude": -34.6037, "longitude": -58.3816, "name": "Buenos Aires" },
+          { "latitude": -31.4201, "longitude": -64.1888, "name": "Córdoba" },
+          { "latitude": -32.9468, "longitude": -60.6393, "name": "Rosario" }
+        ],
+        "name": "Argentina"
+      }
+]
