@@ -179,7 +179,9 @@ const Game = () => {
   // Choose random country on mount
   useEffect(() => {
     let randomCountryIdx = Math.floor(Math.random() * countries.length);
-    setCurrentCountry(countries[randomCountryIdx]);
+    // UNCOMMENT THIS
+    // setCurrentCountry(countries[randomCountryIdx]);
+    setCurrentCountry(countries[1]);
     console.log(currentCountry);
     // let randomLocationId = Math.floor(Math.random() * currentCountry?.largest_cities.length);
     // setCurrentLocation(currentCountry.largest_cities[randomLocationId])
